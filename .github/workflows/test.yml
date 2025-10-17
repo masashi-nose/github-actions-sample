@@ -1,0 +1,34 @@
+name: CI Tests
+
+on:
+  # push:
+  #   paths:
+  #     - "sample-project/**"
+  #     - ".github/workflows/test.yml"
+  pull_request:
+    paths:
+      - "sample-project/**/*.spec.ts"
+      - "sample-project/**/*.test.ts"
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sample-project
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: npm
+          cache-dependency-path: sample-project/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run unit tests (Vitest)
+        run: npm run test:unit -- --run --reporter=dot
