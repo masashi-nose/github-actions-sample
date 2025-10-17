@@ -1,14 +1,8 @@
 name: CI Tests # CI Tests workflow
 
 on:
-  # push:
-  #   paths:
-  #     - "sample-project/**"
-  #     - ".github/workflows/test.yml"
   pull_request:
-    paths:
-      - "sample-project/**/*.spec.ts"
-      - "sample-project/**/*.test.ts"
+    paths: ["sample-project/**/*.ts", "sample-project/**/*.vue"]
 
 jobs:
   unit-tests:
